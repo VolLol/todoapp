@@ -36,3 +36,7 @@ databaseChangeLog:
   - include:
       file: scripts/009_create_task_comments_table.sql
       relativeToChangelogFile: true
+
+  - include:
+      file: scripts/010_added_unique_index_to_users_table.sql
+      relativeToChangelogFile: true
