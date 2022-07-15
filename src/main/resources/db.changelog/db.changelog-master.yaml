@@ -1,0 +1,38 @@
+databaseChangeLog:
+
+  - include:
+      file: scripts/001_create_users_table.sql
+      relativeToChangelogFile: true
+
+
+  - include:
+      file: scripts/002_create_areas_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/003_create_projects_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/004_create_tasks_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/005_create_kanban_columns_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/006_kanban_column_task_m2m_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/007_create_label_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/008_create_task_label_m2m_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: scripts/009_create_task_comments_table.sql
+      relativeToChangelogFile: true
