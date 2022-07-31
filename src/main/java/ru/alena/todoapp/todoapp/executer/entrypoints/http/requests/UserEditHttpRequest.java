@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class RequestUserEdit {
+public class UserEditHttpRequest {
 
     private UUID userId;
 

@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestCreateUser {
+public class CreateUserHttpRequest {
 
     private String username;
     private String email;

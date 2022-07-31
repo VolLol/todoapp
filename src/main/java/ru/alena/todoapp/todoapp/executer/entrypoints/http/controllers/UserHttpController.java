@@ -3,8 +3,8 @@ package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RequestCreateUser;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RequestUserEdit;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.UserEditHttpRequest;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.*;
 
 import java.util.List;
@@ -19,25 +19,23 @@ public class UserHttpController {
 
     private final UserSearchUseCase userSearchUseCase;
 
-    private final UserShowAllUseCase userShowAllUseCase;
 
-    public UserHttpController(UserCreateUseCase userCreateUseCase, UserEditUseCase userEditUseCase, UserRemoveUseCase userRemoveUseCase, UserSearchUseCase userSearchUseCase, UserShowAllUseCase userShowAllUseCase) {
+    public UserHttpController(UserCreateUseCase userCreateUseCase, UserEditUseCase userEditUseCase, UserRemoveUseCase userRemoveUseCase, UserSearchUseCase userSearchUseCase) {
         this.userCreateUseCase = userCreateUseCase;
         this.userEditUserCase = userEditUseCase;
         this.userRemoveUseCase = userRemoveUseCase;
         this.userSearchUseCase = userSearchUseCase;
-        this.userShowAllUseCase = userShowAllUseCase;
     }
 
     @PostMapping("user/new")
     @ResponseStatus(code = HttpStatus.OK)
-    void userCreate(@RequestBody RequestCreateUser user) {
+    void userCreate(@RequestBody CreateUserHttpRequest user) {
         userCreateUseCase.execute(user);
     }
 
     @PutMapping("user/edit")
     @ResponseStatus(code = HttpStatus.OK)
-    void userEdit(@RequestBody RequestUserEdit request) {
+    void userEdit(@RequestBody UserEditHttpRequest request) {
         userEditUserCase.execute(request);
     }
 
@@ -47,14 +45,10 @@ public class UserHttpController {
         userRemoveUseCase.execute();
     }
 
-    @GetMapping("user/all")
-    List<User> showAllUsers() {
-        return userShowAllUseCase.execute();
-    }
-
     @GetMapping("user/search")
-    List<User> searchUsers() {
+    List<User> showAllUsers() {
         return userSearchUseCase.execute();
     }
+
 }
 

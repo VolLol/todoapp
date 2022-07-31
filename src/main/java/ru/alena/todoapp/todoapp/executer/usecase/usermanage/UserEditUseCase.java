@@ -2,7 +2,7 @@ package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RequestUserEdit;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.UserEditHttpRequest;
 
 @Service
 public class UserEditUseCase {
@@ -13,7 +13,7 @@ public class UserEditUseCase {
         this.repository = repository;
     }
 
-    public void execute(RequestUserEdit request){
+    public void execute(UserEditHttpRequest request){
 
 
     }
