@@ -1,14 +1,15 @@
 package ru.alena.todoapp.todoapp.executer.entrypoints.http.requests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
-
 @Getter
 @Setter
-public class UserEditHttpRequest {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EditUserHttpRequest {
 
     private UUID userId;
 

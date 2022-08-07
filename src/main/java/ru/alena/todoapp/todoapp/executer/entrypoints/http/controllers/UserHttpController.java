@@ -1,13 +1,16 @@
 package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.UserEditHttpRequest;
-import ru.alena.todoapp.todoapp.executer.usecase.usermanage.*;
-
-import java.util.List;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.EditUserHttpRequest;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RemoveUserHttpRequest;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserSearchResponse;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserCreateUseCase;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserEditUseCase;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserRemoveUseCase;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
 @RestController
 public class UserHttpController {
@@ -28,27 +31,23 @@ public class UserHttpController {
     }
 
     @PostMapping("user/new")
-    @ResponseStatus(code = HttpStatus.OK)
-    void userCreate(@RequestBody CreateUserHttpRequest user) {
-        userCreateUseCase.execute(user);
+    UserCommonResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException {
+        return userCreateUseCase.execute(user);
     }
 
     @PutMapping("user/edit")
-    @ResponseStatus(code = HttpStatus.OK)
-    void userEdit(@RequestBody UserEditHttpRequest request) {
-        userEditUserCase.execute(request);
+    UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException {
+        return userEditUserCase.execute(request);
     }
 
-    @DeleteMapping("users/delete")
-    @ResponseStatus(code = HttpStatus.OK)
-    void showUsers() {
-        userRemoveUseCase.execute();
+    @PutMapping("user/remove")
+    UserCommonResponse userRemove(@RequestBody RemoveUserHttpRequest request) throws InvalidUserDateException {
+        return userRemoveUseCase.execute(request);
     }
 
     @GetMapping("user/search")
-    List<User> showAllUsers() {
+    UserSearchResponse showAllUsers() {
         return userSearchUseCase.execute();
     }
-
 }
 

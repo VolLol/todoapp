@@ -1,0 +1,38 @@
+POST http://localhost:8080/user/new
+Content-Type: application/json
+
+{
+  "username": "newBBeautifulUser",
+  "password": "passwordCorrect",
+  "email": "newe@main.com"
+}
+
+
+###
+PUT http://localhost:8080/user/remove
+Content-Type: application/json
+
+{
+  "userId": "70f479b2-5eab-42fc-9b56-a676158918b3"
+}
+
+###
+PUT http://localhost:8080/user/edit
+Content-Type: application/json
+
+{
+  "userId": "70f479b2-5eab-42fc-9b56-a676158918b3",
+  "fieldName": "username",
+  "newValue": "BadName"
+}
+
+###
+GET http://localhost:8080/user/search
+Content-Type: application/json
+
+
+
+
+
+
+

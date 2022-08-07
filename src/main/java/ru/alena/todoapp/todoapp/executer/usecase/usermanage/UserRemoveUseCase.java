@@ -1,11 +1,16 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RemoveUserHttpRequest;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserRemoveUseCase {
@@ -16,7 +21,26 @@ public class UserRemoveUseCase {
         this.repository = repository;
     }
 
-    public List<User> execute() {
-        return Collections.emptyList();
+    public UserCommonResponse execute(RemoveUserHttpRequest request) throws InvalidUserDateException {
+
+        UUID id = UUID.fromString(request.getUserId());
+
+        Optional<User> userOptional = repository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User userFromDb = userOptional.get();
+            if (userFromDb.getDeletedAt() == null) {
+                userFromDb.setDeletedAt(LocalDateTime.now());
+                repository.save(userFromDb);
+                return UserCommonResponse.builder()
+                        .status(HttpStatus.OK.getReasonPhrase())
+                        .message("User with id " + request.getUserId() + " was deleted.")
+                        .date(LocalDateTime.now()).build();
+            } else {
+                throw new InvalidUserDateException("User with id " + request.getUserId() + " already deleted.");
+            }
+        } else {
+            throw new InvalidUserDateException("User with id " + request.getUserId() + " not found.");
+        }
     }
 }
