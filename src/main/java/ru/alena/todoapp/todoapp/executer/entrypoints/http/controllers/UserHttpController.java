@@ -3,7 +3,6 @@ package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 import org.springframework.web.bind.annotation.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.EditUserHttpRequest;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RemoveUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserSearchResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserCreateUseCase;
@@ -36,13 +35,14 @@ public class UserHttpController implements IUserHttpController {
     }
 
     @PutMapping("user/edit")
+    @ResponseBody
     public UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException {
         return userEditUserCase.execute(request);
     }
 
     @PostMapping("user/remove")
-    public UserCommonResponse userRemove(@RequestBody RemoveUserHttpRequest request) throws InvalidUserDateException {
-        return userRemoveUseCase.execute(request);
+    public UserCommonResponse userRemove(@RequestParam(name = "id") String userUUID) throws InvalidUserDateException {
+        return userRemoveUseCase.execute(userUUID);
     }
 
     @GetMapping("user/search")

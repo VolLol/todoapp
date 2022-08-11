@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.RemoveUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
@@ -21,10 +20,10 @@ public class UserRemoveUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(RemoveUserHttpRequest request) throws InvalidUserDateException {
+    public UserCommonResponse execute(String userUUID) throws InvalidUserDateException {
 
         try {
-            UUID id = UUID.fromString(request.getUserId());
+            UUID id = UUID.fromString(userUUID);
             Optional<User> userOptional = repository.findById(id);
 
             if (userOptional.isPresent()) {
@@ -34,13 +33,13 @@ public class UserRemoveUseCase {
                     repository.save(userFromDb);
                     return UserCommonResponse.builder()
                             .status(HttpStatus.OK.getReasonPhrase())
-                            .message("User with id " + request.getUserId() + " was deleted.")
+                            .message("User with id " + userUUID + " was deleted.")
                             .date(LocalDateTime.now()).build();
                 } else {
-                    throw new InvalidUserDateException("User with id " + request.getUserId() + " already deleted.");
+                    throw new InvalidUserDateException("User with id " + userUUID + " already deleted.");
                 }
             } else {
-                throw new InvalidUserDateException("User with id " + request.getUserId() + " not found.");
+                throw new InvalidUserDateException("User with id " + userUUID + " not found.");
             }
         } catch (IllegalArgumentException exception) {
             throw new InvalidUserDateException("Not valid user id.");
