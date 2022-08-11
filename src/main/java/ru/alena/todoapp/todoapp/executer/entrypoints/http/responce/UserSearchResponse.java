@@ -13,5 +13,7 @@ public class UserSearchResponse {
 
     private String title;
 
+    private Integer count;
+
     private List<SimpleUserForResponse> users;
 }

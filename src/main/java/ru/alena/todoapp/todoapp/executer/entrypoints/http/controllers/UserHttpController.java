@@ -45,9 +45,10 @@ public class UserHttpController implements IUserHttpController {
         return userRemoveUseCase.execute(userUUID);
     }
 
+    @Override
     @GetMapping("user/search")
-    public UserSearchResponse showAllUsers() {
-        return userSearchUseCase.execute();
+    public UserSearchResponse showAllUsers(@RequestParam(name = "removed", required = false) Boolean removed) {
+        return userSearchUseCase.execute(removed);
     }
 }
 

@@ -1,6 +1,7 @@
 package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.EditUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
@@ -13,7 +14,7 @@ public interface IUserHttpController {
 
     UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException;
 
-    UserCommonResponse userRemove(@RequestBody String userUUID) throws InvalidUserDateException;
+    UserCommonResponse userRemove(@RequestParam String userUUID) throws InvalidUserDateException;
 
-    UserSearchResponse showAllUsers();
+    UserSearchResponse showAllUsers(@RequestParam Boolean removed);
 }

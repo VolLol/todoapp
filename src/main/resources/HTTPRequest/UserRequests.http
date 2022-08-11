@@ -7,11 +7,9 @@ Content-Type: application/json
   "email": "newe@main.com"
 }
 
-
 ###
 POST http://localhost:8080/user/remove?id=48569ea9-5759-44b2-92cc-04694f56d38f
 Content-Type: application/json
-
 
 ###
 PUT http://localhost:8080/user/edit
@@ -25,6 +23,10 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/user/search
+Content-Type: application/json
+
+###
+GET http://localhost:8080/user/search?removed=true
 Content-Type: application/json
 
 
