@@ -13,7 +13,7 @@ import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
 @RestController
-public class UserHttpController {
+public class UserHttpController implements IUserHttpController {
 
     private final UserCreateUseCase userCreateUseCase;
     private final UserEditUseCase userEditUserCase;
@@ -31,22 +31,22 @@ public class UserHttpController {
     }
 
     @PostMapping("user/new")
-    UserCommonResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException {
+    public UserCommonResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException {
         return userCreateUseCase.execute(user);
     }
 
     @PutMapping("user/edit")
-    UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException {
+    public UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException {
         return userEditUserCase.execute(request);
     }
 
-    @PutMapping("user/remove")
-    UserCommonResponse userRemove(@RequestBody RemoveUserHttpRequest request) throws InvalidUserDateException {
+    @PostMapping("user/remove")
+    public UserCommonResponse userRemove(@RequestBody RemoveUserHttpRequest request) throws InvalidUserDateException {
         return userRemoveUseCase.execute(request);
     }
 
     @GetMapping("user/search")
-    UserSearchResponse showAllUsers() {
+    public UserSearchResponse showAllUsers() {
         return userSearchUseCase.execute();
     }
 }
