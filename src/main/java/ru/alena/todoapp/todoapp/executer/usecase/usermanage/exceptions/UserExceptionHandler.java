@@ -14,7 +14,6 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidUserDateException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<UserCommonResponse> handleInvalidUserDate(InvalidUserDateException e) {
         UserCommonResponse response = new UserCommonResponse(
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
@@ -25,7 +24,6 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<UserCommonResponse> handleUserNotFound(UserNotFoundException e) {
         UserCommonResponse response = new UserCommonResponse(
                 HttpStatus.NOT_FOUND.getReasonPhrase(),

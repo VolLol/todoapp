@@ -15,5 +15,5 @@ public class UserSearchResponse {
 
     private Integer count;
 
-    private List<SimpleUserForResponse> users;
+    private List<BaseUserEntityResponse> users;
 }

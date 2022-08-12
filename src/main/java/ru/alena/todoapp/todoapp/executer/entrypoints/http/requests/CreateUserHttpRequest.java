@@ -1,5 +1,6 @@
 package ru.alena.todoapp.todoapp.executer.entrypoints.http.requests;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 
@@ -10,10 +11,13 @@ import lombok.*;
 @NoArgsConstructor
 public class CreateUserHttpRequest {
 
+    @Schema(example = "Margo")
     private String username;
 
+    @Schema(example = "margo@mail.com")
     private String email;
 
+    @Schema(example = "margoPassword")
     private String password;
 
 }
