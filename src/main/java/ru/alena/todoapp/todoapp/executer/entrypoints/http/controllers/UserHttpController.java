@@ -8,8 +8,9 @@ import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserSearchRes
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserCreateUseCase;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserEditUseCase;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserRemoveUseCase;
-import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserShowAllCase;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.UserNotFoundException;
 
 @RestController
 public class UserHttpController implements IUserHttpController {
@@ -19,14 +20,14 @@ public class UserHttpController implements IUserHttpController {
 
     private final UserRemoveUseCase userRemoveUseCase;
 
-    private final UserSearchUseCase userSearchUseCase;
+    private final UserShowAllCase userShowAllUsecase;
 
 
-    public UserHttpController(UserCreateUseCase userCreateUseCase, UserEditUseCase userEditUseCase, UserRemoveUseCase userRemoveUseCase, UserSearchUseCase userSearchUseCase) {
+    public UserHttpController(UserCreateUseCase userCreateUseCase, UserEditUseCase userEditUseCase, UserRemoveUseCase userRemoveUseCase, UserShowAllCase userShowAllUsecase) {
         this.userCreateUseCase = userCreateUseCase;
         this.userEditUserCase = userEditUseCase;
         this.userRemoveUseCase = userRemoveUseCase;
-        this.userSearchUseCase = userSearchUseCase;
+        this.userShowAllUsecase = userShowAllUsecase;
     }
 
     @PostMapping("user/new")
@@ -36,19 +37,19 @@ public class UserHttpController implements IUserHttpController {
 
     @PutMapping("user/edit")
     @ResponseBody
-    public UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException {
+    public UserCommonResponse userEdit(@RequestBody EditUserHttpRequest request) throws InvalidUserDateException, UserNotFoundException {
         return userEditUserCase.execute(request);
     }
 
     @PostMapping("user/remove")
-    public UserCommonResponse userRemove(@RequestParam(name = "id") String userUUID) throws InvalidUserDateException {
+    public UserCommonResponse userRemove(@RequestParam(name = "id") String userUUID) throws InvalidUserDateException, UserNotFoundException {
         return userRemoveUseCase.execute(userUUID);
     }
 
     @Override
-    @GetMapping("user/search")
-    public UserSearchResponse showAllUsers(@RequestParam(name = "removed", required = false) Boolean removed) {
-        return userSearchUseCase.execute(removed);
+    @GetMapping("user/search{removed}")
+    public UserSearchResponse showAllUsers(@RequestParam(name = "removed") Boolean removed) {
+        return userShowAllUsecase.execute(removed);
     }
 }
 

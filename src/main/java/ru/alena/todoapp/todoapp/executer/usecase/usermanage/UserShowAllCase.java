@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserSearchUseCase {
+public class UserShowAllCase {
 
     private final UserRepository repository;
 
-    public UserSearchUseCase(UserRepository repository) {
+    public UserShowAllCase(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -46,6 +46,5 @@ public class UserSearchUseCase {
                     .title("Users were not found")
                     .build();
         }
-
     }
 }

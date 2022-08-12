@@ -7,6 +7,7 @@ import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.Use
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.EditUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class UserEditUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(EditUserHttpRequest request) throws InvalidUserDateException {
+    public UserCommonResponse execute(EditUserHttpRequest request) throws InvalidUserDateException, UserNotFoundException {
         Optional<User> userFromDb = repository.findById(request.getUserId());
         if (isColumnExist(request.getFieldName())) {
 
@@ -33,7 +34,7 @@ public class UserEditUseCase {
                     if (isUsernameCorrect(request.getNewValue())) {
                         editedUser.setUsername(request.getNewValue());
                     } else {
-                        throw new InvalidUserDateException(request.getNewValue() + " is invalid username. Choose another username.");
+                        throw new InvalidUserDateException("username");
                     }
                 }
 
@@ -41,7 +42,7 @@ public class UserEditUseCase {
                     if (isEmailCorrect(request.getNewValue())) {
                         editedUser.setEmail(request.getNewValue());
                     } else {
-                        throw new InvalidUserDateException(request.getNewValue() + " is invalid email. Choose another email.");
+                        throw new InvalidUserDateException("email");
                     }
                 }
 
@@ -49,7 +50,7 @@ public class UserEditUseCase {
                     if (isPasswordCorrect(request.getNewValue())) {
                         editedUser.setCryptoPassword(encryptPassword(request.getNewValue()));
                     } else {
-                        throw new InvalidUserDateException("Password is invalid. Choose another password.");
+                        throw new InvalidUserDateException("password");
                     }
                 }
 
@@ -61,7 +62,7 @@ public class UserEditUseCase {
                         .message("User change " + request.getFieldName() + " successful.")
                         .date(LocalDateTime.now()).build();
             } else {
-                throw new InvalidUserDateException("User with id " + request.getUserId() + " not found");
+                throw new UserNotFoundException(request.getUserId().toString());
             }
         } else {
             throw new InvalidUserDateException("Field " + request.getFieldName() + " not exist");

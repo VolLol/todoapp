@@ -6,6 +6,7 @@ import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class UserRemoveUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(String userUUID) throws InvalidUserDateException {
+    public UserCommonResponse execute(String userUUID) throws InvalidUserDateException, UserNotFoundException {
 
         try {
             UUID id = UUID.fromString(userUUID);
@@ -39,7 +40,7 @@ public class UserRemoveUseCase {
                     throw new InvalidUserDateException("User with id " + userUUID + " already deleted.");
                 }
             } else {
-                throw new InvalidUserDateException("User with id " + userUUID + " not found.");
+                throw new UserNotFoundException(userUUID);
             }
         } catch (IllegalArgumentException exception) {
             throw new InvalidUserDateException("Not valid user id.");

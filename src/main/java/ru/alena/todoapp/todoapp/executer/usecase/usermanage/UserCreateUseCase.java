@@ -25,17 +25,17 @@ public class UserCreateUseCase {
     public UserCommonResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
 
         if (!isUsernameCorrect(request.getUsername()))
-            throw new InvalidUserDateException(request.getUsername() + " is invalid username. Choose another username.");
+            throw new InvalidUserDateException("username");
         if (!isEmailCorrect(request.getEmail()))
-            throw new InvalidUserDateException(request.getEmail() + " is invalid email. Choose another email.");
+            throw new InvalidUserDateException("email");
         if (!isPasswordCorrect(request.getPassword()))
-            throw new InvalidUserDateException("Password is invalid. Choose another password.");
+            throw new InvalidUserDateException("password");
 
         if (repository.existsByUsername(request.getUsername())) {
-            throw new InvalidUserDateException("User with username " + request.getUsername() + " already exists. Choose another.");
+            throw new InvalidUserDateException("Username already exists.");
         }
         if (repository.existsByEmail(request.getEmail())) {
-            throw new InvalidUserDateException("User with email " + request.getEmail() + " already exists. Choose another.");
+            throw new InvalidUserDateException("Email already exists.");
         }
 
         User newUser = User.builder()

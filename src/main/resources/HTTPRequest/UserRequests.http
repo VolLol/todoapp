@@ -2,13 +2,13 @@ POST http://localhost:8080/user/new
 Content-Type: application/json
 
 {
-  "username": "newBBeautifulUser",
-  "password": "passwordCorrect",
-  "email": "newe@main.com"
+  "username": "newdBBddeautifulUser",
+  "password": "passrdCoect",
+  "email": "newe@maidn.com"
 }
 
 ###
-POST http://localhost:8080/user/remove?id=48569ea9-5759-44b2-92cc-04694f56d38f
+POST http://localhost:8080/user/remove?id=10178d45-ee90-4fb9-823c-aefd83240fd3
 Content-Type: application/json
 
 ###
@@ -20,10 +20,6 @@ Content-Type: application/json
   "fieldName": "username",
   "newValue": "BadName"
 }
-
-###
-GET http://localhost:8080/user/search
-Content-Type: application/json
 
 ###
 GET http://localhost:8080/user/search?removed=true
