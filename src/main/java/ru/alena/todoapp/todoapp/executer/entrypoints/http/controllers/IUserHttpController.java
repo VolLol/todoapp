@@ -18,7 +18,5 @@ public interface IUserHttpController {
 
     UserCommonResponse userRemove(@RequestParam String userUUID) throws InvalidUserDateException, UserNotFoundException;
 
-    //UserSearchResponse showAllUsers();
-
-    UserSearchResponse showAllUsers(@PathVariable(required = false) Boolean removed);
+    UserSearchResponse showAllUsers();
 }

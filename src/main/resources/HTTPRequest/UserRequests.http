@@ -2,9 +2,9 @@ POST http://localhost:8080/user/new
 Content-Type: application/json
 
 {
-  "username": "newdBBddeautifulUser",
-  "password": "passrdCoect",
-  "email": "newe@maidn.com"
+  "username": "newdssdsBBddeautifulUser",
+  "password": "passddrsdCoect",
+  "email": "newedd@maidn.csom"
 }
 
 ###
@@ -16,13 +16,13 @@ PUT http://localhost:8080/user/edit
 Content-Type: application/json
 
 {
-  "userId": "70f479b2-5eab-42fc-9b56-a676158918b3",
+  "userId": "94f6f4a7-9be2-420b-bbf9-39936cbbacf8",
   "fieldName": "username",
-  "newValue": "BadName"
+  "newValue": "BafdNames"
 }
 
 ###
-GET http://localhost:8080/user/search?removed=true
+GET http://localhost:8080/user/search
 Content-Type: application/json
 
 

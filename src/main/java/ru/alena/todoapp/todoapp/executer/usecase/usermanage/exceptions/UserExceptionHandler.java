@@ -31,8 +31,7 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
                 "User with id = " + e.getUserId() + " not exist",
                 LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-
 
 }
