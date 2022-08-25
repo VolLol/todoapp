@@ -1,18 +1,19 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.EditUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
-import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
-import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.UserNotFoundException;
+import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 import static ru.alena.todoapp.todoapp.Utils.*;
+import static ru.alena.todoapp.todoapp.executer.usecase.usermanage.EditedField.*;
 
 @Service
 public class UserEditUseCase {
@@ -24,31 +25,38 @@ public class UserEditUseCase {
     }
 
     public UserCommonResponse execute(EditUserHttpRequest request) throws InvalidUserDateException, UserNotFoundException {
-        Optional<User> userFromDb = repository.findById(request.getUserId());
-        if (isColumnExist(request.getFieldName())) {
+        isEditedFieldValid(request.getFieldName());
+
+        try {
+            UUID id = UUID.fromString(request.getUserId());
+
+            Optional<User> userFromDb = repository.findById(id);
 
             if (userFromDb.isPresent()) {
                 User editedUser = userFromDb.get();
 
-                if (request.getFieldName().equals("username")) {
-                    if (isUsernameCorrect(request.getNewValue())) {
-                        editedUser.setUsername(request.getNewValue());
+                String fieldName = request.getFieldName().toUpperCase();
+                String newValue = request.getNewValue();
+
+                if (fieldName.equalsIgnoreCase(USERNAME.name())) {
+                    if (isUsernameCorrect(newValue)) {
+                        editedUser.setUsername(newValue);
                     } else {
                         throw new InvalidUserDateException("username");
                     }
                 }
 
-                if (request.getFieldName().equals("email")) {
-                    if (isEmailCorrect(request.getNewValue())) {
-                        editedUser.setEmail(request.getNewValue());
+                if (fieldName.equalsIgnoreCase(EMAIL.name())) {
+                    if (isEmailCorrect(newValue)) {
+                        editedUser.setEmail(newValue);
                     } else {
                         throw new InvalidUserDateException("email");
                     }
                 }
 
-                if (request.getFieldName().equals("password")) {
-                    if (isPasswordCorrect(request.getNewValue())) {
-                        editedUser.setCryptoPassword(encryptPassword(request.getNewValue()));
+                if (fieldName.equalsIgnoreCase(PASSWORD.name())) {
+                    if (isPasswordCorrect(newValue)) {
+                        editedUser.setCryptoPassword(encryptPassword(newValue));
                     } else {
                         throw new InvalidUserDateException("password");
                     }
@@ -62,10 +70,18 @@ public class UserEditUseCase {
                         .message("User change " + request.getFieldName() + " successful.")
                         .date(LocalDateTime.now()).build();
             } else {
-                throw new UserNotFoundException(request.getUserId().toString());
+                throw new UserNotFoundException(request.getUserId());
             }
-        } else {
-            throw new InvalidUserDateException("Field " + request.getFieldName() + " not exist");
+        } catch (IllegalArgumentException e) {
+            throw new InvalidUserDateException("user id not UUID");
+        }
+    }
+
+    private void isEditedFieldValid(String fieldName) throws InvalidUserDateException {
+        try {
+            valueOf(fieldName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidUserDateException("Field " + fieldName + " not exist");
         }
     }
 }

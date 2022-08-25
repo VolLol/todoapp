@@ -1,19 +1,18 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
 
 import java.time.LocalDateTime;
 
-@RestControllerAdvice
 @ControllerAdvice("ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers")
 public class UserExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidUserDateException.class)
     @ResponseBody
+    //@ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<UserCommonResponse> handleInvalidUserDate(InvalidUserDateException e) {
         UserCommonResponse response = new UserCommonResponse(
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),

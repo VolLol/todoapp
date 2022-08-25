@@ -1,20 +1,20 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
+
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.BaseUserEntityResponse;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserSearchResponse;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserShowAllCase {
+public class UserSearchUseCase {
 
     private final UserRepository repository;
 
-    public UserShowAllCase(UserRepository repository) {
+    public UserSearchUseCase(UserRepository repository) {
         this.repository = repository;
     }
 

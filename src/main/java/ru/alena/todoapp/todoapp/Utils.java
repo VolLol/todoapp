@@ -32,14 +32,4 @@ public class Utils {
                 .matches();
     }
 
-    public static boolean isColumnExist(String columName) {
-        if (columName != null) {
-            return switch (columName) {
-                case "username", "password", "email" -> true;
-                default -> false;
-            };
-        } else return false;
-    }
-
-
 }

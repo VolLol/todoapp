@@ -16,9 +16,9 @@ PUT http://localhost:8080/user/edit
 Content-Type: application/json
 
 {
-  "userId": "94f6f4a7-9be2-420b-bbf9-39936cbbacf8",
-  "fieldName": "username",
-  "newValue": "BafdNames"
+  "fieldName": "password",
+  "newValue": "newPassword",
+  "userId": "94f6f4a7-9be2-420be-bbf9-39336cbbacf8"
 }
 
 ###

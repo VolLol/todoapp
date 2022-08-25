@@ -32,13 +32,5 @@ public class UtilsTest {
         Assertions.assertFalse(isPasswordCorrect("passwordpassword"));
     }
 
-    @Test
-    public void isColumExistTest() {
-        Assertions.assertTrue(isColumnExist("username"));
-        Assertions.assertTrue(isColumnExist("email"));
-        Assertions.assertTrue(isColumnExist("password"));
-        Assertions.assertFalse(isColumnExist("Not correct"));
-        Assertions.assertFalse(isColumnExist(""));
-    }
 
 }
