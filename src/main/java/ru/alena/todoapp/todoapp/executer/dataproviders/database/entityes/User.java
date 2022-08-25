@@ -37,6 +37,8 @@ public class User {
     @Pattern(regexp = "^[A-Za-z\\d+_.-]+@(.+)$")
     private String email;
 
+    private String mood;
+
     @Column
     private LocalDateTime createdAt;
 

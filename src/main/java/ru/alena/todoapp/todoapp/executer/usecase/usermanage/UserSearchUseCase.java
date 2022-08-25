@@ -22,7 +22,14 @@ public class UserSearchUseCase {
         List<User> userList = repository.findAll();
         if (!userList.isEmpty()) {
             List<BaseUserEntityResponse> simpleUsers = userList.stream()
-                    .map(u -> new BaseUserEntityResponse(u.getUsername(), u.getEmail()))
+                    .map(u -> BaseUserEntityResponse.builder()
+                            .username(u.getUsername())
+                            .email(u.getEmail())
+                            .mood(u.getMood())
+                            .createdAt(u.getUpdatedAt())
+                            .updatedAt(u.getUpdatedAt())
+                            .deletedAt(u.getUpdatedAt())
+                            .build())
                     .collect(Collectors.toList());
             String title = "Founded following users";
 

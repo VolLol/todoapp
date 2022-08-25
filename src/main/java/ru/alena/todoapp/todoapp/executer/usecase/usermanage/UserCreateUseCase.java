@@ -1,12 +1,11 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.BaseUserEntityResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public class UserCreateUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
+    public BaseUserEntityResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
 
         if (!isUsernameCorrect(request.getUsername()))
             throw new InvalidUserDateException("username");
@@ -42,15 +41,18 @@ public class UserCreateUseCase {
                 .username(request.getUsername())
                 .cryptoPassword(encryptPassword(request.getPassword()))
                 .email(request.getEmail())
+                .mood(request.getMood())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         repository.save(newUser);
 
-        return UserCommonResponse.builder()
-                .status(HttpStatus.OK.getReasonPhrase())
-                .message("User create successful")
-                .date(LocalDateTime.now())
+        return BaseUserEntityResponse.builder()
+                .username(newUser.getUsername())
+                .email(newUser.getEmail())
+                .mood(newUser.getMood())
+                .createdAt(newUser.getCreatedAt())
+                .updatedAt(newUser.getUpdatedAt())
                 .build();
     }
 }

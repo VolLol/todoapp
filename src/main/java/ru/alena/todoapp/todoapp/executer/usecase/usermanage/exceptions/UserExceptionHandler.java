@@ -12,7 +12,6 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidUserDateException.class)
     @ResponseBody
-    //@ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<UserCommonResponse> handleInvalidUserDate(InvalidUserDateException e) {
         UserCommonResponse response = new UserCommonResponse(
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),

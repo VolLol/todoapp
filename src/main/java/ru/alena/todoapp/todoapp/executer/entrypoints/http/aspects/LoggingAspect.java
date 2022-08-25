@@ -27,7 +27,7 @@ public class LoggingAspect {
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase.execute()) ||" +
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserRemoveUseCase.execute(..)) ")
     public void logAfterExecuteUserUsecase(JoinPoint joinPoint) {
-        logger.info("Complete " + joinPoint.getSignature().getDeclaringType().getSimpleName());
+        logger.info("Complete execute " + joinPoint.getSignature().getDeclaringType().getSimpleName());
     }
 
 

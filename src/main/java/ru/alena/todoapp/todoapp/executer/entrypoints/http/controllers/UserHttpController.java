@@ -24,7 +24,7 @@ public class UserHttpController implements IUserHttpController {
     }
 
     @PostMapping("user/new")
-    public UserCommonResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException {
+    public BaseUserEntityResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException {
         return userCreateUsecase.execute(user);
     }
 

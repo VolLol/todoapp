@@ -14,6 +14,9 @@ public class CreateUserHttpRequest {
     @Schema(example = "Margo")
     private String username;
 
+    @Schema(example = "Amazing mood!")
+    private String mood;
+
     @Schema(example = "margo@mail.com")
     private String email;
 

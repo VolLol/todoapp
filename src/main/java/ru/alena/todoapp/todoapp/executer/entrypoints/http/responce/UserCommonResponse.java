@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 
 public class UserCommonResponse {
 
-    @Schema(example = "OK")
+    @Schema(example = "Bad request")
     private String status;
 
-    @Schema(example = "User create successful")
+    @Schema(example = "User use invalid date: password")
     private String message;
 
     @Schema(example = "2022-08-12T12:59:44.2121825")
