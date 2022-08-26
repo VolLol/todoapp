@@ -31,7 +31,7 @@ public interface IUserHttpController {
             @ApiResponse(responseCode = "400", description = "The user used invalid data"),
             @ApiResponse(responseCode = "404", description = "The user with the given id was not found")
     })
-    UserCommonResponse userRemove(@RequestParam String userUUID) throws InvalidUserDateException, UserNotFoundException;
+    UserCommonResponse userRemove(@RequestParam String userId) throws InvalidUserDateException, UserNotFoundException;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All users have been displayed")})

@@ -10,6 +10,8 @@ import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static ru.alena.todoapp.todoapp.Utils.*;
+
 @Service
 public class UserRemoveUseCase {
 
@@ -19,10 +21,10 @@ public class UserRemoveUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(String userUUID) throws InvalidUserDateException, UserNotFoundException {
-        try {
-            UUID id = UUID.fromString(userUUID);
-            Optional<User> userOptional = repository.findById(id);
+    public UserCommonResponse execute(String userId) throws InvalidUserDateException, UserNotFoundException {
+
+        if (isStringUUID(userId)) {
+            Optional<User> userOptional = repository.findById(UUID.fromString(userId));
 
             if (userOptional.isPresent()) {
                 User userFromDb = userOptional.get();
@@ -31,16 +33,14 @@ public class UserRemoveUseCase {
                     repository.save(userFromDb);
                     return UserCommonResponse.builder()
                             .status(HttpStatus.OK.getReasonPhrase())
-                            .message("User with id " + userUUID + " was deleted.")
+                            .message("User with id " + userId + " was deleted.")
                             .date(LocalDateTime.now()).build();
                 } else {
-                    throw new InvalidUserDateException("User with id " + userUUID + " already deleted.");
+                    throw new InvalidUserDateException("User with id " + userId + " already deleted.");
                 }
             } else {
-                throw new UserNotFoundException(userUUID);
+                throw new UserNotFoundException(userId);
             }
-        } catch (IllegalArgumentException exception) {
-            throw new InvalidUserDateException("Not valid user id.");
-        }
+        } else throw new UserNotFoundException(userId);
     }
 }

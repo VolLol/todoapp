@@ -36,8 +36,8 @@ public class UserHttpController implements IUserHttpController {
     }
 
     @PostMapping("/remove")
-    public UserCommonResponse userRemove(@RequestParam(name = "id") String userUUID) throws InvalidUserDateException, UserNotFoundException {
-        return userRemoveUsecase.execute(userUUID);
+    public UserCommonResponse userRemove(@RequestParam(name = "id") String userId) throws InvalidUserDateException, UserNotFoundException {
+        return userRemoveUsecase.execute(userId);
     }
 
     public UserSearchResponse showAllUsers() {
