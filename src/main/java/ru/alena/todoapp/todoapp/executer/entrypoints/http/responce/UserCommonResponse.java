@@ -17,7 +17,7 @@ public class UserCommonResponse {
     @Schema(example = "Bad request")
     private String status;
 
-    @Schema(example = "User use invalid date: password")
+    @Schema(example = "User use invalid date")
     private String message;
 
     @Schema(example = "2022-08-12T12:59:44.2121825")

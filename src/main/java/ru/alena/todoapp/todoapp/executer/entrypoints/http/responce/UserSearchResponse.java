@@ -18,5 +18,5 @@ public class UserSearchResponse {
     @Schema(example = "1")
     private Integer count;
 
-    private List<BaseUserEntityResponse> users;
+    private List<UserEntityResponse> users;
 }

@@ -21,8 +21,8 @@ public class UserSearchUseCase {
     public UserSearchResponse execute() {
         List<User> userList = repository.findAll();
         if (!userList.isEmpty()) {
-            List<BaseUserEntityResponse> simpleUsers = userList.stream()
-                    .map(u -> BaseUserEntityResponse.builder()
+            List<UserEntityResponse> simpleUsers = userList.stream()
+                    .map(u -> UserEntityResponse.builder()
                             .username(u.getUsername())
                             .email(u.getEmail())
                             .mood(u.getMood())

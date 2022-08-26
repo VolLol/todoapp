@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @Builder
-public class BaseUserEntityResponse {
+public class UserEntityResponse {
 
     @Schema(example = "Bob Dilan")
     private String username;

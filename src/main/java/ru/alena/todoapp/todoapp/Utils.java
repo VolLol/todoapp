@@ -32,4 +32,13 @@ public class Utils {
                 .matches();
     }
 
+    public static boolean isStringUUID(String value) {
+        return (Pattern.compile((
+                "^[0-9A-Fa-f]{8}-" +
+                        "[0-9A-Fa-f]{4}-" +
+                        "[0-9A-Fa-f]{4}-" +
+                        "[0-9A-Fa-f]{4}-" +
+                        "[0-9A-Fa-f]{12}$"
+        )).matcher(value).matches());
+    }
 }

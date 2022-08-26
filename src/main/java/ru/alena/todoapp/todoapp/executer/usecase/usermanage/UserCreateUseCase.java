@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.BaseUserEntityResponse;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserEntityResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class UserCreateUseCase {
         this.repository = repository;
     }
 
-    public BaseUserEntityResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
+    public UserEntityResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
 
         if (!isUsernameCorrect(request.getUsername()))
             throw new InvalidUserDateException("username");
@@ -47,7 +47,7 @@ public class UserCreateUseCase {
                 .build();
         repository.save(newUser);
 
-        return BaseUserEntityResponse.builder()
+        return UserEntityResponse.builder()
                 .username(newUser.getUsername())
                 .email(newUser.getEmail())
                 .mood(newUser.getMood())

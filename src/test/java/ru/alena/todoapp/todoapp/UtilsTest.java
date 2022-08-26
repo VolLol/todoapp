@@ -1,11 +1,11 @@
 package ru.alena.todoapp.todoapp;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static ru.alena.todoapp.todoapp.Utils.*;
 
 public class UtilsTest {
+
 
     @Test
     public void isUsernameCorrectTest() {
@@ -32,5 +32,13 @@ public class UtilsTest {
         Assertions.assertFalse(isPasswordCorrect("passwordpassword"));
     }
 
+
+    @Test
+    public void isStringUUIDTest() {
+        Assertions.assertTrue(isStringUUID("6a8faa92-8b71-4047-b325-7c5ff84adddd"));
+        Assertions.assertFalse(isStringUUID("6a8faa92-8b71-4047-b325"));
+        Assertions.assertFalse(isStringUUID("6a8faa92"));
+
+    }
 
 }
