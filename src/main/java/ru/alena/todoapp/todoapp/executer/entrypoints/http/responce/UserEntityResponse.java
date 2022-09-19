@@ -27,6 +27,5 @@ public class UserEntityResponse {
     @Schema(example = "2022-07-21 10:34:56.056201")
     private LocalDateTime updatedAt;
 
-    @Schema(example = "2022-09-13 10:34:56.054402")
     private LocalDateTime deletedAt;
 }

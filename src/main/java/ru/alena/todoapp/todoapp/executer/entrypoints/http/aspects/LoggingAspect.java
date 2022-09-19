@@ -15,7 +15,7 @@ public class LoggingAspect {
 
     @Before("execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserEditUsecase.execute(..))|| " +
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserCreateUseCase.execute(..)) ||" +
-            "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase.execute()) ||" +
+            "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase.execute(..)) ||" +
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserRemoveUseCase.execute(..)) ")
 
     public void logBeforeExecuteUserUsecase(JoinPoint joinPoint) {
@@ -24,7 +24,7 @@ public class LoggingAspect {
 
     @After("execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserEditUsecase.execute(..))|| " +
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserCreateUseCase.execute(..)) ||" +
-            "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase.execute()) ||" +
+            "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserSearchUseCase.execute(..)) ||" +
             "execution(* ru.alena.todoapp.todoapp.executer.usecase.usermanage.UserRemoveUseCase.execute(..)) ")
     public void logAfterExecuteUserUsecase(JoinPoint joinPoint) {
         logger.info("Complete execute " + joinPoint.getSignature().getDeclaringType().getSimpleName());

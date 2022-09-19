@@ -3,6 +3,7 @@ package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
+import org.springframework.hateoas.*;
 import org.springframework.web.bind.annotation.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.*;
@@ -36,6 +37,8 @@ public interface IUserHttpController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All users have been displayed")})
     @Operation(summary = "Search all users", tags = {"User controller"})
-    @GetMapping("user/search")
-    UserSearchResponse showAllUsers();
+    @GetMapping("/search")
+    PagedModel<EntityModel<UserEntityResponse>> showAllUsers(@RequestParam(defaultValue = "0") Integer pageNumber,
+                                                             @RequestParam(defaultValue = "10") Integer pageSize);
+
 }

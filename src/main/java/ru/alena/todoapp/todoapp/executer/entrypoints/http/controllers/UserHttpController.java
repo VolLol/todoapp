@@ -1,5 +1,6 @@
 package ru.alena.todoapp.todoapp.executer.entrypoints.http.controllers;
 
+import org.springframework.hateoas.*;
 import org.springframework.web.bind.annotation.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.*;
@@ -40,8 +41,12 @@ public class UserHttpController implements IUserHttpController {
         return userRemoveUsecase.execute(userId);
     }
 
-    public UserSearchResponse showAllUsers() {
-        return userShowAllUsecase.execute();
+    @Override
+    @GetMapping("/search")
+    public PagedModel<EntityModel<UserEntityResponse>> showAllUsers(@RequestParam(defaultValue = "0") Integer page,
+                                                                    @RequestParam(defaultValue = "5") Integer size) {
+        return userShowAllUsecase.execute(page, size);
     }
+
 }
 
