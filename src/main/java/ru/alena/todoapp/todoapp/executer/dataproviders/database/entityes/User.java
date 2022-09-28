@@ -1,11 +1,12 @@
 package ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes;
 
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
+import lombok.*;
+import org.hibernate.annotations.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,7 +28,6 @@ public class User {
     private UUID userId;
 
     @Column(unique = true, nullable = false)
-    @NotNull(message = "Please, set here the username")
     private String username;
 
     @Column(name = "crypto_password", nullable = false)
@@ -35,8 +35,9 @@ public class User {
 
     @Column(unique = true, nullable = false, length = 512)
     @Pattern(regexp = "^[A-Za-z\\d+_.-]+@(.+)$")
-    @NotNull(message = "Please, set here the user email")
     private String email;
+
+    private String mood;
 
     @Column
     private LocalDateTime createdAt;

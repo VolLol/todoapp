@@ -1,0 +1,33 @@
+POST http://localhost:8080/user/new
+Content-Type: application/json
+
+{
+  "username": "newdssdsBBddeautifulUser",
+  "password": "passddrsdCoect",
+  "email": "newedd@maidn.csom"
+}
+
+###
+POST http://localhost:8080/user/remove?id=10178d45-ee90-4fb9-823c-aefd83240fd3
+Content-Type: application/json
+
+###
+PUT http://localhost:8080/user/edit
+Content-Type: application/json
+
+{
+  "fieldName": "password",
+  "newValue": "newPassword",
+  "userId": "94f6f4a7-9be2-420be-bbf9-39336cbbacf8"
+}
+
+###
+GET http://localhost:8080/user/search
+Content-Type: application/json
+
+
+
+
+
+
+
