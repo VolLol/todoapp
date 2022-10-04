@@ -48,3 +48,7 @@ databaseChangeLog:
   - include:
       file: scripts/012_added_mood_field_to_user_entity.sql
       relativeToChangelogFile: true
+
+  - include:
+      file: scripts/013_added_constrain_area_table.sql
+      relativeToChangelogFile: true

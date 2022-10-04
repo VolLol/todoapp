@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
 import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
-import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserCommonResponse;
+import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.CommonResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.*;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class UserRemoveUseCase {
         this.repository = repository;
     }
 
-    public UserCommonResponse execute(String userId) throws InvalidUserDateException, UserNotFoundException {
+    public CommonResponse execute(String userId) throws InvalidUserDateException, UserNotFoundException {
 
         if (isStringUUID(userId)) {
             Optional<User> userOptional = repository.findById(UUID.fromString(userId));
@@ -31,7 +31,7 @@ public class UserRemoveUseCase {
                 if (userFromDb.getDeletedAt() == null) {
                     userFromDb.setDeletedAt(LocalDateTime.now());
                     repository.save(userFromDb);
-                    return UserCommonResponse.builder()
+                    return CommonResponse.builder()
                             .status(HttpStatus.OK.getReasonPhrase())
                             .message("User with id " + userId + " was deleted.")
                             .date(LocalDateTime.now()).build();

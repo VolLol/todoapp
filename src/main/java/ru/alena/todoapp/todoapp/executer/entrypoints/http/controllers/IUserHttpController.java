@@ -14,15 +14,15 @@ public interface IUserHttpController {
     @Operation(summary = "Create new user", tags = {"User controller"},
             responses = {
                     @ApiResponse(responseCode = "201", description = "The user has been created", content = @Content(schema = @Schema(implementation = UserEntityResponse.class))),
-                    @ApiResponse(responseCode = "400", description = "The user used a non-valid value", content = @Content(schema = @Schema(implementation = UserCommonResponse.class)))
+                    @ApiResponse(responseCode = "400", description = "The user used a non-valid value", content = @Content(schema = @Schema(implementation = CommonResponse.class)))
             })
     UserEntityResponse userCreate(@RequestBody CreateUserHttpRequest user) throws InvalidUserDateException;
 
     @Operation(summary = "Edit user by id", tags = {"User controller"},
             responses = {
                     @ApiResponse(responseCode = "200", description = "The user has been updated mood field", content = @Content(schema = @Schema(implementation = UserEntityResponse.class))),
-                    @ApiResponse(responseCode = "400", description = "The user used a non-valid value", content = @Content(schema = @Schema(implementation = UserCommonResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "The user with this id does not exist", content = @Content(schema = @Schema(implementation = UserCommonResponse.class)))
+                    @ApiResponse(responseCode = "400", description = "The user used a non-valid value", content = @Content(schema = @Schema(implementation = CommonResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "The user with this id does not exist", content = @Content(schema = @Schema(implementation = CommonResponse.class)))
             })
     UserEntityResponse userEditMood(@RequestBody UserEditHttpRequest request, @PathVariable(name = "userId") String userId) throws InvalidUserDateException, UserNotFoundException;
 
@@ -32,7 +32,7 @@ public interface IUserHttpController {
             @ApiResponse(responseCode = "400", description = "The user used invalid data"),
             @ApiResponse(responseCode = "404", description = "The user with the given id was not found")
     })
-    UserCommonResponse userRemove(@RequestParam String userId) throws InvalidUserDateException, UserNotFoundException;
+    CommonResponse userRemove(@RequestParam String userId) throws InvalidUserDateException, UserNotFoundException;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All users have been displayed")})

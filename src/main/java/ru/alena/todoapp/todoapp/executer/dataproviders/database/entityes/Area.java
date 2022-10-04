@@ -1,9 +1,10 @@
 package ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -36,7 +37,6 @@ public class Area {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
     private LocalDateTime deletedAt;
 
 }

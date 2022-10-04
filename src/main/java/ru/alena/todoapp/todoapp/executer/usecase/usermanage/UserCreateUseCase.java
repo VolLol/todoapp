@@ -1,24 +1,29 @@
 package ru.alena.todoapp.todoapp.executer.usecase.usermanage;
 
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.User;
-import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.UserRepository;
+import ru.alena.todoapp.todoapp.executer.dataproviders.database.entityes.*;
+import ru.alena.todoapp.todoapp.executer.dataproviders.database.repositories.*;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.requests.CreateUserHttpRequest;
 import ru.alena.todoapp.todoapp.executer.entrypoints.http.responce.UserEntityResponse;
 import ru.alena.todoapp.todoapp.executer.usecase.usermanage.exceptions.InvalidUserDateException;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static ru.alena.todoapp.todoapp.Utils.*;
 
 @Service
 public class UserCreateUseCase {
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
+    private final AreaRepository areaRepository;
 
-    public UserCreateUseCase(UserRepository repository) {
-        this.repository = repository;
+    public UserCreateUseCase(UserRepository userRepository, AreaRepository areaRepository) {
+        this.userRepository = userRepository;
+        this.areaRepository = areaRepository;
     }
 
     public UserEntityResponse execute(CreateUserHttpRequest request) throws InvalidUserDateException {
@@ -30,10 +35,10 @@ public class UserCreateUseCase {
         if (!isPasswordCorrect(request.getPassword()))
             throw new InvalidUserDateException("password");
 
-        if (repository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername())) {
             throw new InvalidUserDateException("Username already exists.");
         }
-        if (repository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new InvalidUserDateException("Email already exists.");
         }
 
@@ -45,7 +50,17 @@ public class UserCreateUseCase {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-        repository.save(newUser);
+
+        UUID userId = userRepository.save(newUser).getUserId();
+
+        areaRepository.save(
+                Area.builder()
+                        .role("OWNER_AREA")
+                        .userFkId(userId)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build()
+        );
 
         return UserEntityResponse.builder()
                 .username(newUser.getUsername())

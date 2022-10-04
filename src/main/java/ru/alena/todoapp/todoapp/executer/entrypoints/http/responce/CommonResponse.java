@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
-public class UserCommonResponse {
+public class CommonResponse {
 
     private String status;
 
